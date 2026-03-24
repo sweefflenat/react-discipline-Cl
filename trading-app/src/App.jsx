@@ -81,8 +81,8 @@ const styles = `
     min-height: -webkit-fill-available;
     color: var(--text-dark);
     -webkit-font-smoothing: antialiased;
+    overflow-y: auto;
     overflow-x: hidden;
-    position: fixed;
     width: 100%;
   }
 
