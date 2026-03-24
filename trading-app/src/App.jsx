@@ -83,7 +83,6 @@ const styles = `
     -webkit-font-smoothing: antialiased;
     overflow-y: auto;
     overflow-x: hidden;
-    width: 100%;
   }
 
   #root {
@@ -95,7 +94,6 @@ const styles = `
 
   /* Animated water ripple effect */
   .water-bg {
-    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -154,10 +152,10 @@ const styles = `
     position: relative;
     z-index: 1;
     min-height: 100vh;
-    min-height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
-    padding-bottom: 110px;
+    padding-bottom: 120px;
+    overflow-y: visible;
   }
 
   /* Page content */
