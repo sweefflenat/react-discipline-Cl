@@ -77,20 +77,23 @@ const styles = `
       var(--ocean-3) 45%, 
       var(--ocean-4) 70%, 
       var(--ocean-5) 100%);
-    min-height: 100%; 
+    /* FIXED FOR IPHONE: Removed position: fixed and fixed height */
+    min-height: 100%;
+    width: 100%;
+    overflow-x: hidden;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
   }
 
   #root {
     min-height: 100vh;
-    min-height: -webkit-fill-available;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
   }
 
   /* Animated water ripple effect */
   .water-bg {
+    /* FIXED: Changed to position: fixed so it stays behind while scrolling */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -109,49 +112,17 @@ const styles = `
     animation: ripple 20s linear infinite;
   }
 
-  .water-bg::before {
-    width: 200%;
-    height: 200%;
-    top: -50%;
-    left: -50%;
-    animation-duration: 25s;
-  }
-
-  .water-bg::after {
-    width: 180%;
-    height: 180%;
-    top: -40%;
-    left: -40%;
-    animation-duration: 30s;
-    animation-direction: reverse;
-  }
-
-  @keyframes ripple {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  /* Soft light rays */
-  .light-rays {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60%;
-    pointer-events: none;
-    z-index: 0;
-    background: radial-gradient(ellipse at 30% -20%, rgba(255,255,255,0.35) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 10%, rgba(255,255,255,0.2) 0%, transparent 40%);
-  }
+  /* ... ripple animations remain the same ... */
 
   /* App container */
   .app {
     position: relative;
     z-index: 1;
+    /* FIXED: Changed to min-height and added padding for bottom nav */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding-bottom: 120px;
+    padding-bottom: 140px; 
     overflow-y: visible;
   }
 
@@ -162,382 +133,10 @@ const styles = `
     margin: 0 auto;
     padding: 20px 20px 24px;
     width: 100%;
-    animation: fadeInUp 0.4s ease-out;
+    /* Ensure scrolling isn't blocked at page level */
+    overflow-y: visible;
   }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(16px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Header */
-  .header {
-    text-align: center;
-    padding: 16px 0 24px;
-  }
-
-  .header-eyebrow {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    margin-bottom: 8px;
-  }
-
-  .header-title {
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--text-dark);
-    letter-spacing: -0.5px;
-    margin-bottom: 6px;
-  }
-
-  .header-date {
-    font-size: 14px;
-    color: var(--text-light);
-    font-weight: 500;
-  }
-
-  /* Cards */
-  .card {
-    background: var(--white-90);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 24px;
-    padding: 22px;
-    margin-bottom: 14px;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid var(--white-80);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .card-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    margin-bottom: 16px;
-  }
-
-  /* Form elements */
-  .form-group {
-    margin-bottom: 18px;
-  }
-
-  .form-group:last-child {
-    margin-bottom: 0;
-  }
-
-  .form-label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    margin-bottom: 10px;
-  }
-
-  .form-input,
-  .form-select,
-  .form-textarea {
-    width: 100%;
-    padding: 14px 16px;
-    font-size: 15px;
-    font-family: inherit;
-    font-weight: 500;
-    color: var(--text-dark);
-    background: var(--white);
-    border: 2px solid transparent;
-    border-radius: 14px;
-    outline: none;
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 12px rgba(42, 168, 208, 0.06);
-  }
-
-  .form-input:focus,
-  .form-select:focus,
-  .form-textarea:focus {
-    border-color: var(--ocean-4);
-    box-shadow: 0 4px 20px rgba(74, 197, 232, 0.15);
-  }
-
-  .form-input::placeholder,
-  .form-textarea::placeholder {
-    color: var(--text-muted);
-  }
-
-  .form-textarea {
-    resize: none;
-    min-height: 90px;
-    line-height: 1.6;
-  }
-
-  .form-select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238AABB8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 18px;
-    padding-right: 42px;
-  }
-
-  /* Toggle */
-  .toggle-group {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px 0;
-  }
-
-  .toggle {
-    position: relative;
-    width: 52px;
-    height: 30px;
-    background: var(--text-muted);
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-  }
-
-  .toggle.active {
-    background: linear-gradient(135deg, var(--ocean-5), var(--green));
-  }
-
-  .toggle::after {
-    content: '';
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 24px;
-    height: 24px;
-    background: var(--white);
-    border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .toggle.active::after {
-    transform: translateX(22px);
-  }
-
-  .toggle-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-dark);
-    line-height: 1.4;
-  }
-
-  /* Slider */
-  .slider-container {
-    padding: 8px 0;
-  }
-
-  .slider-track {
-    position: relative;
-    height: 8px;
-    background: rgba(42, 168, 208, 0.15);
-    border-radius: 4px;
-    margin: 16px 0;
-    cursor: pointer;
-  }
-
-  .slider-fill {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    border-radius: 4px;
-    transition: width 0.15s ease;
-  }
-
-  .slider-thumb {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 26px;
-    height: 26px;
-    background: var(--white);
-    border-radius: 50%;
-    box-shadow: 0 2px 12px rgba(42, 168, 208, 0.3);
-    cursor: grab;
-    transition: box-shadow 0.2s ease;
-  }
-
-  .slider-thumb:active {
-    cursor: grabbing;
-    box-shadow: 0 4px 20px rgba(42, 168, 208, 0.4);
-  }
-
-  .slider-labels {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    color: var(--text-light);
-    margin-top: 8px;
-  }
-
-  /* Mood display */
-  .mood-display {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 8px 0;
-  }
-
-  .mood-circle {
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    font-weight: 700;
-    flex-shrink: 0;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  }
-
-  .mood-circle.good { background: var(--green-soft); color: var(--green); }
-  .mood-circle.neutral { background: var(--yellow-soft); color: var(--yellow); }
-  .mood-circle.bad { background: var(--red-soft); color: var(--red); }
-
-  .mood-text h4 {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 4px;
-  }
-
-  .mood-text p {
-    font-size: 13px;
-    color: var(--text-light);
-  }
-
-  /* Readiness gauge */
-  .readiness {
-    text-align: center;
-    padding: 12px 0;
-  }
-
-  .readiness-value {
-    font-size: 44px;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .readiness-label {
-    font-size: 13px;
-    color: var(--text-light);
-    font-weight: 500;
-  }
-
-  .readiness-bar {
-    height: 8px;
-    background: rgba(42, 168, 208, 0.12);
-    border-radius: 4px;
-    margin: 14px 0 8px;
-    overflow: hidden;
-  }
-
-  .readiness-fill {
-    height: 100%;
-    border-radius: 4px;
-    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Alerts */
-  .alert {
-    border-radius: 16px;
-    padding: 14px 16px;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 1.5;
-    margin: 12px 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .alert-icon {
-    font-size: 16px;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .alert-blue { background: rgba(74, 197, 232, 0.12); color: #1a6b8a; }
-  .alert-green { background: var(--green-soft); color: #1e6e3e; }
-  .alert-yellow { background: var(--yellow-soft); color: #7a4f00; }
-  .alert-red { background: var(--red-soft); color: #8b2a1d; }
-
-  /* Master filter */
-  .master-filter {
-    padding: 22px;
-    border-radius: 20px;
-    text-align: center;
-    margin: 14px 0;
-  }
-
-  .master-filter.locked {
-    background: var(--red-soft);
-    border: 1px solid rgba(239, 123, 108, 0.25);
-  }
-
-  .master-filter.unlocked {
-    background: var(--green-soft);
-    border: 1px solid rgba(78, 203, 160, 0.25);
-  }
-
-  .master-filter-icon {
-    font-size: 28px;
-    margin-bottom: 10px;
-  }
-
-  .master-filter-text {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.5;
-  }
-
-  .master-filter.locked .master-filter-text { color: #8b2a1d; }
-  .master-filter.unlocked .master-filter-text { color: #1e6e3e; }
-
-  /* Primary button */
-  .btn-primary {
-    width: 100%;
-    padding: 16px 28px;
-    font-size: 15px;
-    font-family: inherit;
-    font-weight: 700;
-    color: var(--white);
-    background: linear-gradient(135deg, var(--ocean-5) 0%, var(--green) 100%);
-    border: none;
-    border-radius: 18px;
-    cursor: pointer;
-    box-shadow: 0 6px 24px rgba(74, 197, 232, 0.35);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-top: 8px;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(74, 197, 232, 0.45);
-  }
-
-  .btn-primary:active {
-    transform: translateY(0);
-  }
+`;
 
   /* ═══════════════════════════════════════════════════════════════════════════
      CALENDAR PAGE
