@@ -77,12 +77,9 @@ const styles = `
       var(--ocean-3) 45%, 
       var(--ocean-4) 70%, 
       var(--ocean-5) 100%);
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    color: var(--text-dark);
-    -webkit-font-smoothing: antialiased;
-    overflow-y: auto;
-    overflow-x: hidden;
+    min-height: 100%; 
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
   }
 
   #root {
